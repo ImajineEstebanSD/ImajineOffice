@@ -1,0 +1,22 @@
+.contenedor-registro {
+    margin: 20px;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px black;
+}
+
+.contenedor-registro h2 {
+    padding-left: 5px;
+    font-size: 20px;
+}
+
+.grupo {
+    margin: 5px;
+    padding: 1px;
+    padding-right: 100px;
+}
+
+.btn {
+    margin: 10px 0px 10px 5px;
+}

@@ -1,0 +1,9 @@
+.App {
+    background-image: url(./assets/imagenes/BackgroundTraining.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0%;
+    padding: 100px 300px;
+}
