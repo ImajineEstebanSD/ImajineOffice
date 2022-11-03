@@ -1,89 +1,66 @@
 import { React, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Formik } from 'formik';
+
+import Input from './Input';
+
 import '../hojas-estilo/Registro.css';
 
 function Registro() {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [pass, setPass] = useState('');
-  const [phone, setPhone] = useState('');
+  const valores = {
+    email: '',
+    name: '',
+    lastName: '',
+    pass: '',
+    phone: '',
+  };
 
   return (
     <div className='contenedor-registro'>
       <h2>Register</h2>
-      <Form>
-        <Form.Group className='grupo'>
-          <Form.Control
-            name='email'
-            placeholder='Email'
-            onChange={(ev) => {
-              const {
-                target: { value },
-              } = ev;
-              setEmail(value);
-            }}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className='grupo'>
-          <Form.Control
-            name='nombre'
-            placeholder='Name'
-            onChange={(ev) => {
-              const {
-                target: { value },
-              } = ev;
-              setName(value);
-            }}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className='grupo'>
-          <Form.Control
-            name='Apellido'
-            placeholder='Last Name'
-            onChange={(ev) => {
-              const {
-                target: { value },
-              } = ev;
-              setLastName(value);
-            }}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className='grupo'>
-          <Form.Control
-            name='Password'
-            placeholder='Password'
-            onChange={(ev) => {
-              const {
-                target: { value },
-              } = ev;
-              setPass(value);
-            }}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className='grupo'>
-          <Form.Control
-            name='Telefono'
-            placeholder='Phone Number'
-            onChange={(ev) => {
-              const {
-                target: { value },
-              } = ev;
-              setPhone(value);
-            }}
-          ></Form.Control>
-        </Form.Group>
-      </Form>
-
-      <Button
-        className='btn'
-        onClick={() => {
-          console.log({ email, name, lastName, pass, phone });
+      <Formik initialValues={{ ...valores }}>
+        {({ values, isValid, handleChange }) => {
+          return (
+            <Form>
+              <Input
+                name='email'
+                value={values.email}
+                placeholder='Email'
+                onChange={handleChange}
+              />
+              <Input name='name' value={values.name} placeholder='Name' onChange={handleChange} />
+              <Input
+                name='lastName'
+                value={values.lastName}
+                placeholder='Last Name'
+                onChange={handleChange}
+              />
+              <Input
+                name='pass'
+                value={values.pass}
+                placeholder='Password'
+                onChange={handleChange}
+              />
+              <Input
+                name='phone'
+                value={values.phone}
+                placeholder='Phone'
+                onChange={handleChange}
+              />
+              <Button
+                type='submit'
+                disabled={!isValid}
+                onClick={() => {
+                  console.log({ values });
+                }}
+              >
+                Submit
+              </Button>
+            </Form>
+          );
         }}
-      >
-        Submit
-      </Button>
+      </Formik>
 
       <div>
         <Link className='link' to='/login'>
