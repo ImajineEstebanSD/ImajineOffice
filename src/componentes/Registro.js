@@ -1,7 +1,8 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
+import * as yup from 'yup';
 
 import Input from './Input';
 
@@ -19,7 +20,25 @@ function Registro() {
   return (
     <div className='contenedor-registro'>
       <h2>Register</h2>
-      <Formik initialValues={{ ...valores }}>
+      <Formik
+        initialValues={{ ...valores }}
+        validationSchema={yup.object({
+          email: yup
+            .string('must be a string')
+            .email('enter a valid email')
+            .required('this field is required'),
+          name: yup
+            .string()
+            .matches(/[^$&+,:;=?@#|'<>.^*()%!-\s]/, 'Is not in correct format')
+            .required(),
+          lastName: yup
+            .string()
+            .matches(/[^$&+,:;=?@#|'<>.^*()%!-\s]/, 'Is not in correct format')
+            .required(),
+          pass: yup.string().required(),
+          phone: yup.number().min(5).required(),
+        })}
+      >
         {({ values, isValid, handleChange }) => {
           return (
             <Form>
@@ -49,7 +68,6 @@ function Registro() {
                 onChange={handleChange}
               />
               <Button
-                type='submit'
                 disabled={!isValid}
                 onClick={() => {
                   console.log({ values });
