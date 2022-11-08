@@ -1,55 +1,100 @@
-import { React, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import axios from 'axios';
+
+import Input from './Input';
+
 import '../hojas-estilo/Login.css';
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const valores = {
+    email: '',
+    password: '',
+  };
+
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (values) => {
+    const {
+      data: { data: token },
+    } = await axios.post('http://localhost:8080/api/auth/sign-in', values);
+
+    setToken(token);
+    console.log(token);
+    /*    if (res.data) {
+      navigate('/logged');
+    }*/
+  };
+
+  async function buscarMe() {
+    try {
+      const res = await axios.get('http://localhost:8080/api/auth/me', {
+        headers: { jwt: token },
+      });
+
+      setUser(res.data.user);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className='contenedor-login'>
       <h2>Login</h2>
-      <Form>
-        <Form.Group>
-          <Form.Control
-            name='email'
-            placeholder='Email'
-            onChange={(ev) => {
-              const {
-                target: { value },
-              } = ev;
-              setEmail(value);
-            }}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Control
-            name='name'
-            placeholder='Name'
-            onChange={(ev) => {
-              const {
-                target: { value },
-              } = ev;
-              setName(value);
-            }}
-          ></Form.Control>
-        </Form.Group>
-      </Form>
-
-      <Button
-        onClick={() => {
-          console.log({ email, name });
-        }}
+      <Formik
+        onSubmit={onSubmit}
+        initialValues={{ ...valores }}
+        validationSchema={yup.object({
+          email: yup.string().email().required(),
+          password: yup.string().min(8).required(),
+        })}
       >
-        Submit
-      </Button>
+        {({ errors, values, isValid, handleChange, handleSubmit }) => {
+          return (
+            <>
+              <Form onSubmit={handleSubmit}>
+                <Input
+                  name='email'
+                  error={errors.email}
+                  value={values.email}
+                  placeholder='Email'
+                  onChange={handleChange}
+                />
+                <Input
+                  name='password'
+                  error={errors.password}
+                  value={values.password}
+                  placeholder='Password'
+                  onChange={handleChange}
+                />
+                <Button type='submit' disabled={!isValid}>
+                  Submit
+                </Button>
+              </Form>
 
-      <div>
-        <Link className='link' to='/recover'>
-          Forgot my password
-        </Link>
-      </div>
+              <div>
+                <Link className='link' to='/recover'>
+                  Forgot my password
+                </Link>
+              </div>
+              <div>
+                <Link className='link' to='/'>
+                  Go back
+                </Link>
+              </div>
+            </>
+          );
+        }}
+      </Formik>
+
+      <Button onClick={buscarMe}>My Profile</Button>
+      {user ? <div></div> : <div>Debe ser un usuario logeado</div>}
     </div>
   );
 }

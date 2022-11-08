@@ -7,7 +7,7 @@ import Login from './componentes/Login';
 import RecoverPass from './componentes/RecoverPass';
 import ResetPass from './componentes/ResetPass';
 import Loading from './componentes/Loading';
-import Logout from './componentes/Logout';
+import Logged from './componentes/Logged';
 
 import './App.css';
 
@@ -16,14 +16,13 @@ function App() {
     <div className='App'>
       <Router>
         <Logo />
-
         <Routes>
           <Route path='/' element={<Registro />} />
           <Route path='/login' element={<Login />} />
           <Route path='/recover' element={<RecoverPass />} />
           <Route path='/reset' element={<ResetPass />} />
           <Route path='/loading' element={<Loading />} />
-          <Route path='/logout' element={<Logout />} />
+          <Route path='/logged' element={<Logged />} />
         </Routes>
       </Router>
     </div>
