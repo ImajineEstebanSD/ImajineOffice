@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Logo from './componentes/Logo';
+import Menu from './componentes/Menu';
 import Registro from './componentes/Registro';
 import Login from './componentes/Login';
 import RecoverPass from './componentes/RecoverPass';
@@ -15,7 +15,7 @@ function App() {
   return (
     <div className='App'>
       <Router>
-        <Logo />
+        <Menu />
         <Routes>
           <Route path='/' element={<Registro />} />
           <Route path='/login' element={<Login />} />

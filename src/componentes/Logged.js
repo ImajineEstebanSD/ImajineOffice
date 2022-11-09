@@ -10,8 +10,7 @@ function Logout() {
       <Button
         className=''
         onClick={(e) => {
-          e.preventDefault();
-          navigate('/login');
+          navigate('/');
         }}
       >
         Logout

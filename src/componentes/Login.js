@@ -16,7 +16,6 @@ function Login() {
     password: '',
   };
 
-  const [logged, setLogged] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
 
@@ -35,20 +34,40 @@ function Login() {
       navigate('/logged');
     }*/
   };
+  /*
   async function buscarMe() {
     try {
-      const { data: user } = await axios.get('http://localhost:8080/api/auth/me', {
+      const {
+        data: { data: user },
+      } = await axios.get('http://localhost:8080/api/auth/me', {
         headers: { jwt: token },
       });
-
       setUser(user);
     } catch (error) {
       console.error(error);
     }
-  }
+  }*/
+
+  useEffect(() => {
+    //buscarMe();
+    async function buscarMe() {
+      try {
+        const {
+          data: { data: user },
+        } = await axios.get('http://localhost:8080/api/auth/me', {
+          headers: { jwt: token },
+        });
+        setUser(user);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    buscarMe();
+  }, [token]);
+
   return (
     <>
-      {logged ? ( //Deberia usar useEffect
+      {token ? (
         <Logged />
       ) : (
         <div className='contenedor-login'>
@@ -101,9 +120,14 @@ function Login() {
         </div>
       )}
       <div>
-        <Button onClick={buscarMe}>My Profile</Button>
-        {user ? ( //Deberia usar useEffect?
-          <div>{/*Mostrar de alguna forma*/ console.log(user)}</div>
+        <h2>My Profile</h2>
+        {user ? (
+          <div>
+            <p>{user.name}</p>
+            <p>{user.lastName}</p>
+            <p>{user.email}</p>
+            <p>{user.phone}</p>
+          </div>
         ) : (
           <div>Debe ser un usuario logeado</div>
         )}
