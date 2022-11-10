@@ -7,8 +7,6 @@ import axios from 'axios';
 
 import Input from './Input';
 
-import '../hojas-estilo/RecoverPass.css';
-
 function RecoverPass() {
   const navigate = useNavigate();
 

@@ -10,6 +10,7 @@ import { flow } from '../redux/actions';
 
 import Input from './Input';
 import Logged from './Logged';
+import Loading from './Loading';
 
 function Login() {
   const valores = {
@@ -17,7 +18,7 @@ function Login() {
     password: '',
   };
 
-  const { token, user, isAuthenticated } = useSelector(({ auth }) => auth);
+  const { token, user, isAuthenticated, loading } = useSelector(({ auth }) => auth);
 
   const dispatch = useDispatch();
   const handleClik = () => {
@@ -137,6 +138,7 @@ function Login() {
           ) : (
             <div>Debe ser un usuario logeado</div>
           )}
+          {loading ? <Loading /> : null}
         </div>
       </div>
     </div>

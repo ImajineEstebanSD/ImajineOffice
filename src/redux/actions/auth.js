@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { ActionTypes } from '../../constants/actionTypes';
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -43,7 +44,14 @@ export const flow = (params) => {
   return async (dispatch) => {
     dispatch(waiting());
     try {
-      console.log('entre 1');
+      const {
+        data: { data },
+      } = await axios({
+        method: 'POST',
+        url: 'http://localhost:8080/api/auth/sign-in',
+        data: { email: 'estebansalvay@imajine.com', password: 'asdsadsad' },
+      });
+      /*
       const data = {
         user: {
           name: 'Esteban',
@@ -52,12 +60,9 @@ export const flow = (params) => {
           phone: '123456',
         },
         token: 'tok_alsiugdfqigf7678',
-      };
-      console.log('entre 2');
+      };*/
       await delay(5000);
-      console.log('entre 3');
       dispatch(login(data));
-      console.log('entre 4');
       //dispatch(success(data));
     } catch (err) {
       dispatch(failure());
