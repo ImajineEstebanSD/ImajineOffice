@@ -7,6 +7,8 @@ function Logout() {
 
   return (
     <div>
+      {/*
+      
       <Button
         className=''
         onClick={(e) => {
@@ -14,7 +16,7 @@ function Logout() {
         }}
       >
         Logout
-      </Button>
+      </Button>*/}
       <div>You logged in successfully!!</div>
     </div>
   );

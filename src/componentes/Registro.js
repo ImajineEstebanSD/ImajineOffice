@@ -1,11 +1,15 @@
 import { React } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { flow } from '../redux/actions';
+
 import Input from './Input';
+import Loading from './Loading';
 
 function Registro() {
   const valores = {
@@ -24,7 +28,30 @@ function Registro() {
     //console.log(values);
     navigate('/login');
   };
+  /*
+  //Consume
+  const { isAuthenticated, loading } = useSelector(({ auth }) => auth);
+  console.log({ isAuthenticated, loading });
 
+  //Trigger
+  const desp = useDispatch();
+
+  const handleDisp = () => {
+    desp(flow());
+  };
+
+  if (loading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
+
+  <Row className='mt-5 w-50 d-flex justify-content-center align-items-center'>
+      <Button onClick={handleDisp}>{!isAuthenticated ? 'Logout' : 'You can not logout'}</Button>
+  </Row>
+  */
   return (
     <div className='d-flex justify-content-center mt-5'>
       <div className='d-flex flex-column justify-content-center aling-items-center w-40'>
