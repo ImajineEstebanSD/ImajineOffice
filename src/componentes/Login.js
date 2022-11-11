@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../redux/actions';
-
 import Input from './Input';
 
 function Login() {

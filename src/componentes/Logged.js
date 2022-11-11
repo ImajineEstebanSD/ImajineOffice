@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMe } from '../redux/actions';
-import { Row } from 'react-bootstrap';
+import { Row, Button } from 'react-bootstrap';
 import foto from '../assets/imagenes/fotoPerfil.png';
 
 function Logout() {
@@ -15,6 +15,7 @@ function Logout() {
       console.error(error);
     }
   }, [token]);
+
   return (
     <div className='d-flex flex-column justify-content-center align-items-center'>
       <Row className='d-flex flex-column justify-content-center w-50'>
@@ -23,7 +24,7 @@ function Logout() {
             <Row className='m-2'>
               <p className='text-start'>Personal Information</p>
               <div className='col-4'>
-                <img src={foto} alt='Futura foto perfil' />
+                <img className='rounded-circle' src={foto} alt='Futura foto perfil' />
               </div>
               <div className='col-8'>
                 <Row className='h-100'>
@@ -35,12 +36,7 @@ function Logout() {
                       value={user.name}
                     />
 
-                    <input
-                      className='rounded w-75'
-                      name='email'
-                      placeholder='Email'
-                      value={user.email}
-                    />
+                    <input className='rounded w-75' name='age' placeholder='Age' value='' />
                   </div>
                   <div className='col-6 d-flex flex-column justify-content-center align-items-center gap-5'>
                     <input
@@ -78,6 +74,9 @@ function Logout() {
                   <input className='rounded w-75' name='pm' placeholder='PM Assigned' value='' />
                 </div>
               </Row>
+            </Row>
+            <Row className='justify-content-end mt-5'>
+              <Button className='w-25'>Edit</Button>
             </Row>
           </div>
         ) : (

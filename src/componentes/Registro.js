@@ -1,10 +1,10 @@
-import { React } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { useDispatch } from 'react-redux';
 import { signUp } from '../redux/actions';
 
 import Input from './Input';
@@ -17,12 +17,20 @@ function Registro() {
     password: '',
     phone: '',
   };
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(({ auth }) => auth);
 
   const dispatch = useDispatch();
 
   const onSubmitFlow = async (values) => {
     dispatch(signUp(values));
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/logged');
+    }
+  });
 
   return (
     <div className='d-flex justify-content-center p-5'>
