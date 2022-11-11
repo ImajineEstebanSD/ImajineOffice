@@ -23,7 +23,8 @@ function Logo() {
           <img src={require('../assets/imagenes/ImajineOfficeLogo.png')} alt='Logo' />
         </Nav.Item>
         {isAuthenticated ? (
-          <Nav.Item className=''>
+          <Nav.Item className='d-flex align-items-center'>
+            <span className='me-5'>My Profile</span>
             <Button className='btn btn-light btn-outline-danger' onClick={handleClick}>
               Logout
             </Button>

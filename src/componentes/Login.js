@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -10,21 +10,11 @@ import { login } from '../redux/actions';
 import Input from './Input';
 
 function Login() {
-  const navigate = useNavigate();
-
   const valores = {
     email: '',
     password: '',
   };
-  /*
-  const { token } = useSelector(({ auth }) => auth);
 
-  useEffect(() => {
-    if (token) {
-      navigate('/logged');
-    }
-  }, [token]);
-*/
   const dispatch = useDispatch();
 
   const onSubmitFlow = async (values) => {
@@ -62,6 +52,7 @@ function Login() {
                       />
                       <Input
                         className='m-1'
+                        type='password'
                         name='password'
                         error={errors.password}
                         value={values.password}

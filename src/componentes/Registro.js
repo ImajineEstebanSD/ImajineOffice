@@ -79,6 +79,7 @@ function Registro() {
                   />
                   <Input
                     className='m-1'
+                    type='password'
                     name='password'
                     error={errors.password}
                     value={values.password}
