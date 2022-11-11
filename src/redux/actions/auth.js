@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { ActionTypes } from '../../constants/actionTypes';
+import * as api from '../../modules/api.js';
 
 /* Logout */
 export const logout = () => {
@@ -76,14 +76,12 @@ export const getMeFailure = () => {
 export const login = (params) => {
   return async (dispatch) => {
     dispatch(loginRequest());
+
     try {
       const {
         data: { data },
-      } = await axios({
-        method: 'POST',
-        url: 'http://localhost:8080/api/auth/sign-in',
-        data: params,
-      });
+      } = await api.signIn(params);
+
       window.location.replace('/logged');
       dispatch(loginSuccess(data));
     } catch (err) {
@@ -96,11 +94,8 @@ export const signUp = (params) => {
   return async (dispatch) => {
     dispatch(signUpRequest());
     try {
-      await axios({
-        method: 'POST',
-        url: 'http://localhost:8080/api/auth/sign-up',
-        data: params,
-      });
+      await api.signUp(params);
+
       window.location.replace('/login');
       dispatch(signUpSuccess());
     } catch (err) {
@@ -115,11 +110,7 @@ export const getMe = (params) => {
     try {
       const {
         data: { data },
-      } = await axios({
-        method: 'GET',
-        url: 'http://localhost:8080/api/auth/me',
-        headers: { jwt: params },
-      });
+      } = await api.getProfile(params);
       dispatch(getMeSuccess(data));
     } catch (err) {
       dispatch(getMeFailure());

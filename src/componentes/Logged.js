@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMe } from '../redux/actions';
 import { Row, Button } from 'react-bootstrap';
+import Loading from './Loading';
 import foto from '../assets/imagenes/fotoPerfil.png';
 
 function Logout() {
@@ -80,7 +81,7 @@ function Logout() {
             </Row>
           </div>
         ) : (
-          'Algo salio mal'
+          <Loading />
         )}
       </Row>
     </div>

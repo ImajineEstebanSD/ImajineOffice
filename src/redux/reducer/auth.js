@@ -53,7 +53,6 @@ const auth = (state = initialState, { type, payload }) => {
     case ActionTypes.SIGN_UP_REQUEST:
       return {
         ...state,
-        isAuthenticated: true,
         loading: true,
       };
     //
