@@ -9,7 +9,7 @@ const reducer = persistReducer(
   {
     key: 'imajine-office',
     storage,
-    whitelist: [],
+    whitelist: ['auth'],
   },
   rootReducer,
 );

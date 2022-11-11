@@ -15,16 +15,6 @@ const initialState = {
 
 const auth = (state = initialState, { type, payload }) => {
   switch (type) {
-    // Login
-    case ActionTypes.LOGIN:
-      const { token, user } = payload;
-      return {
-        ...state,
-        isAuthenticated: true,
-        token,
-        user,
-        loading: false,
-      };
     // Logout
     case ActionTypes.LOGOUT:
       return {
@@ -35,23 +25,66 @@ const auth = (state = initialState, { type, payload }) => {
         loading: false,
       };
 
+    // Login
     //
-    case ActionTypes.WAIT:
+    case ActionTypes.LOGIN_REQUEST:
       return {
         ...state,
         loading: true,
       };
     //
-    case ActionTypes.SUCCESS:
+    case ActionTypes.LOGIN_SUCCESS: {
+      const { token } = payload;
       return {
         ...state,
         isAuthenticated: true,
         token,
-        user,
+        loading: false,
+      };
+    }
+    //
+    case ActionTypes.LOGIN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    //SIGN IN
+    case ActionTypes.SIGN_UP_REQUEST:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: true,
+      };
+    //
+    case ActionTypes.SIGN_UP_SUCCESS:
+      return {
+        ...state,
         loading: false,
       };
     //
-    case ActionTypes.FAILURE:
+    case ActionTypes.SIGN_UP_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    //GET ME
+    case ActionTypes.GET_ME_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    //
+    case ActionTypes.GET_ME_SUCCESS:
+      return {
+        ...state,
+        user: payload,
+        loading: false,
+      };
+
+    //
+    case ActionTypes.GET_ME_FAILURE:
       return {
         ...state,
         loading: false,

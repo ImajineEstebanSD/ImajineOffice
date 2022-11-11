@@ -1,16 +1,6 @@
 import axios from 'axios';
 import { ActionTypes } from '../../constants/actionTypes';
 
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-/* Login */
-export const login = (payload) => {
-  return {
-    type: ActionTypes.LOGIN,
-    payload,
-  };
-};
-
 /* Logout */
 export const logout = () => {
   return {
@@ -18,54 +8,121 @@ export const logout = () => {
   };
 };
 
-/* Waiting */
-export const waiting = () => {
+/* Login Waiting */
+export const loginRequest = () => {
   return {
-    type: ActionTypes.WAIT,
+    type: ActionTypes.LOGIN_REQUEST,
   };
 };
 
-/* Success */
-export const success = (payload) => {
+/* Login Success */
+export const loginSuccess = (payload) => {
   return {
-    type: ActionTypes.SUCCESS,
+    type: ActionTypes.LOGIN_SUCCESS,
     payload,
   };
 };
 
-/* Failure */
-export const failure = () => {
+/* Login Failure */
+export const loginFailure = () => {
   return {
-    type: ActionTypes.FAILURE,
+    type: ActionTypes.LOGIN_FAILURE,
   };
 };
 
-export const flow = (params) => {
+/* Sign Up Waiting */
+export const signUpRequest = () => {
+  return {
+    type: ActionTypes.SIGN_UP_REQUEST,
+  };
+};
+
+/* Sign Up Success */
+export const signUpSuccess = () => {
+  return {
+    type: ActionTypes.SIGN_UP_SUCCESS,
+  };
+};
+
+/* Sign Up Failure */
+export const signUpFailure = () => {
+  return {
+    type: ActionTypes.SIGN_UP_FAILURE,
+  };
+};
+
+/* Get Me Waiting */
+export const getMeRequest = () => {
+  return {
+    type: ActionTypes.GET_ME_REQUEST,
+  };
+};
+
+/* Get Me Success */
+export const getMeSuccess = (payload) => {
+  return {
+    type: ActionTypes.GET_ME_SUCCESS,
+    payload,
+  };
+};
+
+/* Get Me Failure */
+export const getMeFailure = () => {
+  return {
+    type: ActionTypes.GET_ME_FAILURE,
+  };
+};
+
+export const login = (params) => {
   return async (dispatch) => {
-    dispatch(waiting());
+    dispatch(loginRequest());
     try {
       const {
         data: { data },
       } = await axios({
         method: 'POST',
         url: 'http://localhost:8080/api/auth/sign-in',
-        data: { email: 'estebansalvay@imajine.com', password: 'asdsadsad' },
+        data: params,
       });
-      /*
-      const data = {
-        user: {
-          name: 'Esteban',
-          lastName: 'Sal Dil',
-          email: 'estebansalvay@imajine.com',
-          phone: '123456',
-        },
-        token: 'tok_alsiugdfqigf7678',
-      };*/
-      await delay(5000);
-      dispatch(login(data));
-      //dispatch(success(data));
+      window.location.replace('/logged');
+      dispatch(loginSuccess(data));
     } catch (err) {
-      dispatch(failure());
+      dispatch(loginFailure());
+    }
+  };
+};
+
+export const signUp = (params) => {
+  return async (dispatch) => {
+    dispatch(signUpRequest());
+    try {
+      await axios({
+        method: 'POST',
+        url: 'http://localhost:8080/api/auth/sign-up',
+        data: params,
+      });
+      window.location.replace('/login');
+      dispatch(signUpSuccess());
+    } catch (err) {
+      dispatch(signUpFailure());
+    }
+  };
+};
+
+export const getMe = (params) => {
+  return async (dispatch) => {
+    dispatch(getMeRequest());
+    try {
+      const {
+        data: { data },
+      } = await axios({
+        method: 'GET',
+        url: 'http://localhost:8080/api/auth/me',
+        headers: { jwt: params },
+      });
+      dispatch(getMeSuccess(data));
+    } catch (err) {
+      dispatch(getMeFailure());
     }
   };
 };
